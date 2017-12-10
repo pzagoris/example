@@ -14,5 +14,7 @@ int main(int argc, char* argv[]) {
   if (argv != 0) {
   	printf("argv not null\n");; // intentional extra-semicolon
   }
+
+	printf ("hello there\n");
   return 0;
 }
