@@ -1,0 +1,24 @@
+dist: trusty
+sudo: false
+
+addons:
+  sonarcloud:
+    organization: "pzagoris-github"
+    token:
+      secure: "v0RbWYe8AbdRgv+ogR+IziXhSv6y4VJG9RlO2PK73fTpuE/MGgui2z/K81uzVEwzQ979mSXZYkB6q+Ib0JkqfvFv8iUJd5bGsu20MlZzZNGjU9KSJMK0Uwd87ZKFVJsS+d74d6Rh7/FMygrrLSbQa288E74hSy+9UVBAm+4lJfnLDuFXuP2ucFEi3KSHtPLpPGEvf0NPBR69BTDTeSgMVWSD3SQNecK4tDaz94Yma6XOcnTTdp1HD1jLW1wWLUAcq3legTFzxqbjxyDOAZspjv0gdW7JlhAvY7mEX9o9wNvn6g+31Z9qdQkmAkCYnDk3l+2VoXhzzLcW4rvIOqQtKCSjFkUeDF2s08ubPkURca75W518jCaL+qhdeZ/07RCv1LozBSURwctKB068qFSCUOjbZi5RiTKafUX4xH6JDtFvTotsl90/XNEPmXj9xAS02hNCpPm4zzFz6SOwy3QjeZpSdWbVONWM6l0c3FyZHVfYpkoA8x/IZj+u+bTgyRU3tZDCruxjQ0Rhzu4JBrWrexPcLObMRcBKE9SprQTW6one9W/ARxhmTRkeLKSwiG95KuZUqJrJLFVkp2Aefloss30/1xSkgtSKWuBSv3MKbbhJlBlZOkz/rPZLoWL4v93fXhvnCF+5cvTaAIVKF2A6suxyY0lJqTrybIRQOTlXFII="
+
+script:
+  - make clean
+  # Wraps the compilation with the Build Wrapper to generate configuration (used
+  # later by the SonarQube Scanner) into the "bw-output" folder
+  - build-wrapper-linux-x86-64 --out-dir bw-output make all
+  # Execute some tests
+  - make test
+  # And finally run the SonarQube analysis - read the "sonar-project.properties"
+  # file to see the specific configuration
+  - sonar-scanner
+
+cache:
+  directories:
+    - '$HOME/.sonar/cache'
+
